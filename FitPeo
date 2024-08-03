@@ -1,0 +1,52 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class FitPeo {
+	static
+	{
+		System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
+	}
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		WebDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://www.fitpeo.com/");
+		driver.get("https://www.fitpeo.com/revenue-calculator");
+		WebElement slider_pos = driver.findElement(By.xpath("//div[@class='MuiBox-root css-1pr1g5o']"));
+		JavascriptExecutor j=(JavascriptExecutor)driver;
+		j.executeScript("arguments[0].scrollIntoView(true);", slider_pos);
+		driver.findElement(By.xpath("//input[@aria-invalid='false']")).sendKeys(Keys.CONTROL+"ax");
+		driver.findElement(By.xpath("//input[@aria-invalid='false']")).sendKeys("560");
+		
+		WebElement cpt_codes = driver.findElement(By.xpath("(//div[@class='MuiBox-root css-4o8pys'])[1]"));
+		j.executeScript("arguments[0].scrollIntoView(true);", cpt_codes);
+		
+        driver.findElement(By.xpath("(//input[@class=\"PrivateSwitchBase-input css-1m9pwf3\"])[1]")).click();
+		driver.findElement(By.xpath("(//input[@class=\"PrivateSwitchBase-input css-1m9pwf3\"])[2]")).click();
+		driver.findElement(By.xpath("(//input[@class=\"PrivateSwitchBase-input css-1m9pwf3\"])[3]")).click();
+		driver.findElement(By.xpath("(//input[@class=\"PrivateSwitchBase-input css-1m9pwf3\"])[7]")).click();
+		
+		String ans1="$110700";
+		String ans = driver.findElement(By.xpath("//div[@class='MuiBox-root css-m1khva']/p[2]")).getText();
+		System.out.println("Total Recurring Reimbursement for all Patients Per Month:"+ans);
+		System.out.println("Total Recurring Reimbursement:"+ans1);
+		if(ans1.equals(ans))
+		{
+			System.out.println(" Total Recurring Reimbursement for all Patients Per Month: shows the value:"
+					+ans1);
+		}
+		else
+		{
+			System.out.println("Total Recurring Reimbursement for all Patients Per Month doesnt shows the value:"	
++ans1);
+		}
+			
+			driver.close();
+	}
+
+}
